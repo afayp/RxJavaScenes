@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.pfh.rxjavascenes.ui.MainActivity"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/btn_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="debounce优化搜索联想"
+        android:onClick="textSearch"/>
+
+    <Button
+        android:id="@+id/btn_repeat_click"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="throttleFirst防止重复点击"
+        android:onClick="repeatClick"/>
+
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CombineLatest合并多个Observable的最新数据"
+        android:onClick="login"/>
+
+    <Button
+        android:id="@+id/btn_cache"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="concat依次检查多个Observable"
+        android:onClick="cache"/>
+
+
+</LinearLayout>

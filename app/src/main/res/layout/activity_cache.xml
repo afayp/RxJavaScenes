@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal">
+
+    <Button
+        android:id="@+id/btn_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="点击开始获取数据"/>
+
+    <TextView
+        android:id="@+id/tv_result"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:gravity="center_horizontal"/>
+
+    <CheckBox
+        android:id="@+id/cb_memory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="内存缓存"/>
+
+    <CheckBox
+        android:id="@+id/cb_disk"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="硬盘缓存"/>
+
+
+</LinearLayout>
