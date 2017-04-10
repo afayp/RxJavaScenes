@@ -36,5 +36,12 @@
         android:text="concat依次检查多个Observable"
         android:onClick="cache"/>
 
+    <Button
+        android:id="@+id/btn_register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="倒计时操作"
+        android:onClick="register"/>
+
 
 </LinearLayout>

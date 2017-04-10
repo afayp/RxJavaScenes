@@ -5,9 +5,11 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import java.io.Serializable;
 import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
+import rx.Observer;
 import rx.Subscriber;
 import rx.functions.Action1;
 import rx.functions.Func1;
@@ -35,7 +37,7 @@ public class OperatorsActivity extends AppCompatActivity {
 
     private void combineOperators() {
         //---merge---//
-        //混着发射，无序
+        //混着发射，无序,可能这个Observable发射一个，那个Observable发射两个(按照事件产生的顺序发送给订阅者)。但是最后会把所有Observable发射完。
         final String[] letters = new String[]{"A","B","C","D"};
         Observable<String> letterObservable = Observable.interval(300, TimeUnit.MILLISECONDS)
                 .take(letters.length)
@@ -45,29 +47,55 @@ public class OperatorsActivity extends AppCompatActivity {
                         return letters[aLong.intValue()];
                     }
                 });
-        Observable<Long> numberObservable = Observable.interval(500, TimeUnit.MILLISECONDS).take(letters.length);
-        Observable.merge(letterObservable,numberObservable);
+        Observable<Long> numberObservable = Observable.interval(500, TimeUnit.MILLISECONDS).take(5);
+        Observable.merge(letterObservable,numberObservable)
+                .subscribe(new Action1<Serializable>() {
+                    @Override
+                    public void call(Serializable serializable) {
+                        Log.e("TAG",serializable.toString()+""); // A 0 B C 1 D 2 3 4
+                    }
+                });
+
 
         //---concat---//
-        //有序，先发射完第一个，再发射第二个
+        //有序，先发射完第一个Observable，再发射第二个Observable
         Observable.concat(letterObservable,numberObservable);
 
-        //----startWith---//
-        Observable.just(1,2,3)
-                .startWith(-1,0);
 
         //---zip---//
+        //按照顺序先从第一个Observable取出一个值，再从第二个Observable取出一个值，将两个值根据函数组合；如果中途一个Observable发射完了，直接onCompleted。
         Observable.zip(letterObservable, numberObservable, new Func2<String, Long, String>() {
             @Override
             public String call(String s, Long aLong) {
                 return s + aLong;
             }
+        }).subscribe(new Observer<String>() {
+            @Override
+            public void onCompleted() {
+                Log.e("TAG","onCompleted!");
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(String s) {
+                Log.e("TAG",""+s); // A0 B1 C2 D3 onCompleted!
+            }
         });
 
         //---combineLatest---//
         //CombineLatest操作符行为类似于zip，但是zip只有当原始的Observable中的每一个都发射了一条数据时才发射数据。
-        //CombineLatest则在原始的Observable中任意一个发射了数据时发射一条数据。
+        //CombineLatest则在原始的Observable中任意一个发射了数据时就发射一条数据。
         //当原始Observables的任何一个发射了一条数据时，CombineLatest使用一个函数结合它们最近发射的数据，然后发射这个函数的返回值。
+
+
+        //----startWith---//
+        Observable.just(1,2,3)
+                .startWith(-1,0);
 
 
     }
