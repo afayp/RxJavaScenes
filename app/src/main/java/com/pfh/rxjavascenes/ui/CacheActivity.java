@@ -20,7 +20,7 @@ import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 /**
- * Created by Administrator on 2017/4/9 0009.
+ * 多级缓存
  */
 
 public class CacheActivity extends AppCompatActivity {
