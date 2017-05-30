@@ -11,9 +11,9 @@ import rx.schedulers.Schedulers;
 /**
  * 异步任务rx实现，替代asyncTask
  * 参考 http://www.developersite.org/905-199836-RxJava%E5%BC%82%E6%AD%A5%E4%BB%BB%E5%8A%A1
- *      http://blog.csdn.net/relicemxd/article/details/52623003
- *      https://github.com/lzyzsd/Awesome-RxJava/issues/9
- *      https://github.com/hehonghui/android-tech-frontier/blob/master/issue-34/%E5%9C%A8Android%E5%BC%80%E5%8F%91%E4%B8%AD%E4%BD%BF%E7%94%A8RxJava.md
+ * http://blog.csdn.net/relicemxd/article/details/52623003
+ * https://github.com/lzyzsd/Awesome-RxJava/issues/9
+ * https://github.com/hehonghui/android-tech-frontier/blob/master/issue-34/%E5%9C%A8Android%E5%BC%80%E5%8F%91%E4%B8%AD%E4%BD%BF%E7%94%A8RxJava.md
  *
  * @param <Param>  参数
  * @param <Result> 结果
@@ -25,7 +25,7 @@ public abstract class RxAsyncTask<Param, Result> {
             @Override
             public void call(Subscriber<? super Result> subscriber) {
                 subscriber.onNext(doInBackground(params));
-                subscriber.onCompleted();
+                subscriber.onCompleted(); // 注意要调用onCompleted(或者onError),否则不会反注册
             }
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

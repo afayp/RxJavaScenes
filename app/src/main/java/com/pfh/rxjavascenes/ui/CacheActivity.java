@@ -20,7 +20,7 @@ import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 /**
- * 多级缓存
+ * 多级缓存,觉得这么实现不太合理。如果有内存缓存/硬盘缓存，则不应该浪费资源去网络请求
  */
 
 public class CacheActivity extends AppCompatActivity {
@@ -36,7 +36,6 @@ public class CacheActivity extends AppCompatActivity {
         cb_memory = (CheckBox) findViewById(R.id.cb_memory);
         cb_disk = (CheckBox) findViewById(R.id.cb_disk);
         final TextView tv_result = (TextView) findViewById(R.id.tv_result);
-
         RxView.clicks(btn_start)
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnNext(new Action1<Void>() {
